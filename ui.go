@@ -1,9 +1,20 @@
 package main
 
+import "fyne.io/fyne/v2/container"
+
 func (app *Config) makeUI() {
-	// get the current price of gold
+	/* PRICE TEXT */
+	openPrice, currentPrice, priceChange := app.getPriceText()
 
-	// put price information into a container
+	priceContent := container.NewGridWithColumns(3,
+		openPrice,
+		currentPrice,
+		priceChange,
+	)
 
-	// add container to window
+	app.PriceContainer = priceContent
+	content := container.NewVBox(priceContent)
+
+	app.MainWindow.SetContent(content)
+
 }

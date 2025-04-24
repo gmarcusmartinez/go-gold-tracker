@@ -9,10 +9,11 @@ import (
 )
 
 type Config struct {
-	App        fyne.App
-	InfoLog    *log.Logger
-	ErrorLog   *log.Logger
-	MainWindow fyne.Window
+	App            fyne.App
+	InfoLog        *log.Logger
+	ErrorLog       *log.Logger
+	MainWindow     fyne.Window
+	PriceContainer *fyne.Container
 }
 
 var cfg Config
@@ -29,7 +30,7 @@ func main() {
 	// TODO: create a database repository
 
 	cfg.MainWindow = a.NewWindow("GoldTracker")
-	cfg.MainWindow.Resize(fyne.NewSize(300, 200))
+	cfg.MainWindow.Resize(fyne.NewSize(770, 410))
 	cfg.MainWindow.SetFixedSize(true)
 	cfg.MainWindow.SetMaster()
 
