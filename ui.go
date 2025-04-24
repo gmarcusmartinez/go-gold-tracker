@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
@@ -41,14 +43,24 @@ func (app *Config) makeUI() {
 
 	app.MainWindow.SetContent(content)
 
+	/* REFRESH PRICE IN BACKGROUND EVERY 30 SECONDS */
+	go func() {
+		for range time.Tick(time.Second * 5) {
+			app.refreshPriceContent()
+		}
+	}()
+
 }
 
 func (app *Config) refreshPriceContent() {
 	open, current, change := app.getPriceText()
-	app.PriceContainer.Objects = []fyne.CanvasObject{open, current, change}
-	app.PriceContainer.Refresh()
 
-	chart := app.getChart()
-	app.PriceChartContainer.Objects = []fyne.CanvasObject{chart}
-	app.PriceChartContainer.Refresh()
+	fyne.Do(func() {
+		app.PriceContainer.Objects = []fyne.CanvasObject{open, current, change}
+		app.PriceContainer.Refresh()
+
+		chart := app.getChart()
+		app.PriceChartContainer.Objects = []fyne.CanvasObject{chart}
+		app.PriceChartContainer.Refresh()
+	})
 }
