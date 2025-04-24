@@ -12,6 +12,8 @@ func (app *Config) getPriceText() (*canvas.Text, *canvas.Text, *canvas.Text) {
 	var g Gold
 	var open, current, change *canvas.Text
 
+	g.Client = app.HTTPClient
+
 	gold, err := g.GetPrices()
 	if err != nil {
 		grey := color.NRGBA{R: 155, G: 155, B: 155, A: 255}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"fyne.io/fyne/v2"
@@ -14,6 +15,7 @@ type Config struct {
 	ErrorLog       *log.Logger
 	MainWindow     fyne.Window
 	PriceContainer *fyne.Container
+	HTTPClient     *http.Client
 }
 
 var cfg Config
@@ -24,6 +26,7 @@ func main() {
 
 	cfg.InfoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	cfg.ErrorLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime|log.Lshortfile)
+	cfg.HTTPClient = &http.Client{}
 
 	// TODO: open a connection to the database
 
