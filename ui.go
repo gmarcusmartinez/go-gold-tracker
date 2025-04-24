@@ -27,8 +27,8 @@ func (app *Config) makeUI() {
 		container.NewTabItemWithIcon(
 			"Prices",
 			theme.HomeIcon(),
-			canvas.NewText("Price content goes here", nil)),
-
+			app.pricesTab(),
+		),
 		container.NewTabItemWithIcon(
 			"Holdings", theme.InfoIcon(),
 			canvas.NewText("Holdings content goes here", nil)),
