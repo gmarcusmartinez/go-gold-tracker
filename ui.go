@@ -7,5 +7,3 @@ func (app *Config) makeUI() {
 
 	// add container to window
 }
-
-// https://data-asg.goldprice.org/dbXRates/USD
