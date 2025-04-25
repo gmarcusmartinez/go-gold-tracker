@@ -13,11 +13,13 @@ import (
 )
 
 func (app *Config) holdingsTab() *fyne.Container {
-	return nil
+	app.HoldingsTable = app.getHoldingsTable()
+	return container.NewVBox(app.HoldingsTable)
 }
 
 func (app *Config) getHoldingsTable() *widget.Table {
 	data := app.getHoldingSlice()
+	app.Holdings = data
 
 	t := widget.NewTable(
 		func() (int, int) {
@@ -30,16 +32,7 @@ func (app *Config) getHoldingsTable() *widget.Table {
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == (len(data[0])-1) && i.Row != 0 {
 				w := widget.NewButtonWithIcon("Delete", theme.DeleteIcon(), func() {
-					dialog.ShowConfirm("Delete", "", func(deleted bool) {
-						id, _ := strconv.Atoi(data[i.Row][0].(string))
-
-						err := app.DB.DeleteHolding(int64(id))
-						if err != nil {
-							app.ErrorLog.Panicln(err)
-						}
-
-						// Refresh Holdings Table
-					}, app.MainWindow)
+					app.showConfirmDeleteDialog(data, i)
 				})
 
 				w.Importance = widget.HighImportance
@@ -95,4 +88,17 @@ func (app *Config) currentHoldings() ([]repository.Holdings, error) {
 	}
 
 	return holdings, nil
+}
+
+func (app *Config) showConfirmDeleteDialog(data [][]interface{}, i widget.TableCellID) {
+	dialog.ShowConfirm("Delete", "", func(deleted bool) {
+		id, _ := strconv.Atoi(data[i.Row][0].(string))
+
+		err := app.DB.DeleteHolding(int64(id))
+		if err != nil {
+			app.ErrorLog.Println(err)
+		}
+
+		app.refreshHoldingsTable()
+	}, app.MainWindow)
 }
