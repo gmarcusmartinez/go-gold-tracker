@@ -8,12 +8,17 @@ import (
 	"testing"
 
 	"fyne.io/fyne/v2/test"
+	"github.com/gmarcusmartinez/gold-tracker/repository"
 )
 
 func TestMain(m *testing.M) {
 	a := test.NewApp()
+
 	testApp.App = a
 	testApp.HTTPClient = client
+	testApp.MainWindow = a.NewWindow("")
+
+	testApp.DB = repository.NewTestRepository()
 
 	os.Exit(m.Run())
 }
