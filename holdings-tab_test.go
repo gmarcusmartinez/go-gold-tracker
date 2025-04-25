@@ -12,3 +12,10 @@ func TestConfig_currentHoldings(t *testing.T) {
 		t.Error("wrong number of holdins returned")
 	}
 }
+
+func TestConfig_getHoldingSlice(t *testing.T) {
+	slice := testApp.getHoldingSlice()
+	if len(slice) != 3 {
+		t.Error("wrong number of rows returned", len(slice))
+	}
+}
