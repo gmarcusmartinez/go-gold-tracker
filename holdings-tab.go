@@ -14,7 +14,14 @@ import (
 
 func (app *Config) holdingsTab() *fyne.Container {
 	app.HoldingsTable = app.getHoldingsTable()
-	return container.NewVBox(app.HoldingsTable)
+
+	return container.NewBorder(
+		nil,
+		nil,
+		nil,
+		nil,
+		container.NewAdaptiveGrid(1, app.HoldingsTable),
+	)
 }
 
 func (app *Config) getHoldingsTable() *widget.Table {
@@ -31,13 +38,12 @@ func (app *Config) getHoldingsTable() *widget.Table {
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
 			if i.Col == (len(data[0])-1) && i.Row != 0 {
-				w := widget.NewButtonWithIcon("Delete", theme.DeleteIcon(), func() {
-					app.showConfirmDeleteDialog(data, i)
-				})
-
+				w := widget.NewButtonWithIcon("Delete", theme.DeleteIcon(),
+					func() {
+						app.showConfirmDeleteDialog(data, i)
+					})
 				w.Importance = widget.HighImportance
 				o.(*fyne.Container).Objects = []fyne.CanvasObject{w}
-
 			} else {
 				o.(*fyne.Container).Objects = []fyne.CanvasObject{
 					widget.NewLabel(data[i.Row][i.Col].(string)),
