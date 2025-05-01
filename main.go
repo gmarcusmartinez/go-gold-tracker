@@ -26,6 +26,10 @@ type Config struct {
 	Holdings            [][]interface{}
 	HoldingsTable       *widget.Table
 	HTTPClient          *http.Client
+
+	PurchaseAmountEntry *widget.Entry
+	PurchaseDateEntry   *widget.Entry
+	PurchasePriceEntry  *widget.Entry
 }
 
 func main() {
