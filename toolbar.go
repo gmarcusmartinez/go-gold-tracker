@@ -86,7 +86,7 @@ func (app *Config) addHoldingsDialog() dialog.Dialog {
 				_, err := app.DB.InsertHolding(repository.Holdings{
 					Amount:        amount,
 					PurchaseDate:  purchaseDate,
-					PurchasePrice: int(purchasePrice),
+					PurchasePrice: int(purchasePrice * 100),
 				})
 
 				if err != nil {
