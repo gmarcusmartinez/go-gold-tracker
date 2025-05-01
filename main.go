@@ -49,6 +49,8 @@ func main() {
 	}
 	cfg.setupDB(db)
 
+	currency = a.Preferences().StringWithFallback("currency", "CAD")
+
 	cfg.MainWindow = a.NewWindow("GoldTracker")
 	cfg.MainWindow.Resize(fyne.NewSize(770, 410))
 	cfg.MainWindow.SetFixedSize(true)
